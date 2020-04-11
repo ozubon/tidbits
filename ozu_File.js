@@ -55,7 +55,7 @@
  * "" for path means the main game folder, the rest is required.
  *
  * Some examples:
- * file.read("", tanoshindekudasai.txt") === "Arigato gozaimasu!!!"
+ * file.read("", "tanoshindekudasai.txt") === "Arigato gozaimasu!!!"
  * ^ In a conditional branch will return TRUE (if it's true, needless to say).
  * Set a variable to file.read("", "tanoshindekudasai.txt") using
  * Control Variables and the variable will be set to "Arigato gozaimasu!!!"
