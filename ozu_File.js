@@ -48,7 +48,7 @@
  * file.append
  * ===========================================================================
  * Same as file.write but writes to the end of an existing file instead 
- * overwriting it.
+ * of overwriting it.
  * Intended for script calls.
  *
  * file.append("path", "file.type", "new stuff")
