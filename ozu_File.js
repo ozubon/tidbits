@@ -1,5 +1,5 @@
 //=============================================================================
-//  ozu_File.js v1.1
+//  ozu_File.js v1.2
 //=============================================================================
 
 /*:
@@ -41,8 +41,23 @@
  * "" for path means the main game folder, the rest is required.
  *
  * Some examples:
- * file.write("", "tanoshindekudasai.txt", "Arigato gozaimasu!!!")
- * file.write("data", "test.json", "Can it write to JSON? Yes.")
+ * file.write("", "tanoshindekudasai.txt", "Arigato gozaimasu")
+ * file.write("data", "test.json", "Can it write to JSON?")
+ *
+ * ===========================================================================
+ * file.append
+ * ===========================================================================
+ * Same as file.write but writes to the end of an existing file instead 
+ * overwriting it.
+ * Intended for script calls.
+ *
+ * file.append("path", "file.type", "new stuff")
+ *
+ * "" for path means the main game folder, the rest is required.
+ *
+ * Some examples:
+ * file.append("", "tanoshindekudasai.txt", "!!!")
+ * file.append("data", "test.json", " Yes.")
  *
  * ===========================================================================
  * file.read
@@ -105,10 +120,21 @@
                 return !1
             };
         };
+		
+		oldVersion = window.location.pathname != "/index.html"
 
         file.write = function(filePath, filename, data) {
             filePath = this.createPath(filePath);
             this.fs.writeFileSync(filePath + filename, data);
+        };
+		
+        file.append = function(filePath, filename, data) {
+            if (file.exist(filePath, filename)) {
+                filePath = this.createPath(filePath);
+                return this.fs.appendFile(filePath + filename, data);
+            } else {
+                console.log("File does not exist! Tried to append " + filePath + "/" + filename + "/");
+            };
         };
 
         file.read = function(filePath, filename) {
@@ -137,11 +163,12 @@
                 console.log("File does not exist! Tried to rename " + filePath + "/" + filename + "/");
             };
         };
+	
 
         file.createPath = function(relativePath) {
-			relativePath === "" && (relativePath = ".");
-			relativePath = relativePath + "/";
-            relativePath = (Utils.isNwjs() && Utils.isOptionValid("test")) ? relativePath : "www/" + relativePath;
+			oldVersion && (relativePath = "/" + relativePath);
+			relativePath += (relativePath === "") ? "./" : "/";
+            !(Utils.isNwjs() && Utils.isOptionValid("test")) && (relativePath = "www/" + relativePath);
             var path = window.location.pathname.replace(/(\/www|)\/[^\/]*$/, relativePath);
             if (path.match(/^\/([A-Z]\:)/)) {
                 path = path.slice(1);
