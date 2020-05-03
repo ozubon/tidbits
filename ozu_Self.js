@@ -45,7 +45,7 @@
  *      Greater than or equal to: >=       Less than or equal to: <=
  *      Not equal to: !=                   Equal and equal type: ===
  *      
- * This will return true beause garlic cloves is more than 9:
+ * This will return true because garlic cloves is more than 9:
  * 
  *      self(this)["garlic cloves"] > 9
  *
